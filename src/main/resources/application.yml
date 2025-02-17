@@ -1,0 +1,12 @@
+server:
+  port: 8080
+spring:
+  profiles:
+    active: dev
+  application:
+    name: "healthCare"
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
