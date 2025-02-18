@@ -16,6 +16,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 import static lviv.syrovyi.health_care.common.specification.SpecificationCustom.*;
 
@@ -52,6 +53,11 @@ public class PatientServiceImpl implements PatientService {
         patientRepository.save(patient);
 
         return patientMapper.mapToDTO(patient);
+    }
+
+    @Override
+    public boolean existsById(UUID id){
+        return patientRepository.existsById(id);
     }
 
     private Specification<Patient> getSearchSpecification(PatientFilter patientFilter) {
