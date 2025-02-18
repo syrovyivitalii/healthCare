@@ -15,4 +15,6 @@ public interface DoctorService {
     DoctorResponseDTO save (DoctorRequestDTO doctorRequestDTO);
 
     DoctorResponseDTO patch (UUID doctorId, DoctorPatchRequestDTO doctorPatchRequestDTO);
+
+    boolean existsById(UUID id);
 }
