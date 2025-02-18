@@ -3,6 +3,8 @@ package lviv.syrovyi.health_care.doctor.service.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lviv.syrovyi.health_care.common.dto.response.PageResponse;
+import lviv.syrovyi.health_care.common.exception.ClientBackendException;
+import lviv.syrovyi.health_care.common.exception.ErrorCode;
 import lviv.syrovyi.health_care.doctor.controller.dto.request.DoctorPatchRequestDTO;
 import lviv.syrovyi.health_care.doctor.controller.dto.request.DoctorRequestDTO;
 import lviv.syrovyi.health_care.doctor.controller.dto.response.DoctorResponseDTO;
@@ -60,11 +62,17 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     @Transactional
     public DoctorResponseDTO patch(UUID doctorId, DoctorPatchRequestDTO doctorPatchRequestDTO){
-        Doctor doctor = doctorRepository.findById(doctorId).orElse(null);
+        Doctor doctor = doctorRepository.findById(doctorId)
+                .orElseThrow(() -> new ClientBackendException(ErrorCode.DOCTOR_NOT_FOUND));
 
         doctorMapper.patchMerge(doctorPatchRequestDTO, doctor);
 
         return doctorMapper.mapToDTO(doctor);
+    }
+
+    @Override
+    public boolean existsById(UUID id){
+        return doctorRepository.existsById(id);
     }
 
     private Specification<Doctor> getSearchSpecification(DoctorFilter doctorFilter) {

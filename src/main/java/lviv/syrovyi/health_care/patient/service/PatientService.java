@@ -6,8 +6,12 @@ import lviv.syrovyi.health_care.patient.controller.dto.response.PatientResponseD
 import lviv.syrovyi.health_care.patient.service.filter.PatientFilter;
 import org.springframework.data.domain.Pageable;
 
+import java.util.UUID;
+
 public interface PatientService {
     PageResponse<PatientResponseDTO> findAllPatients(PatientFilter patientFilter, Pageable pageable);
 
     PatientResponseDTO save (PatientRequestDTO patientRequestDTO);
+
+    boolean existsById(UUID id);
 }
