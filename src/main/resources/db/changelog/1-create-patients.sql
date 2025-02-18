@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS patients (
-    id CHAR(36) NOT NULL PRIMARY KEY,
+    id BINARY(16) NOT NULL PRIMARY KEY,
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL
 );
