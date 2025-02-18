@@ -70,11 +70,6 @@ public class DoctorServiceImpl implements DoctorService {
         return doctorMapper.mapToDTO(doctor);
     }
 
-    @Override
-    public boolean existsById(UUID id){
-        return doctorRepository.existsById(id);
-    }
-
     private Specification<Doctor> getSearchSpecification(DoctorFilter doctorFilter) {
         return Specification.where((Specification<Doctor>) searchLikeString("firstName", doctorFilter.getSearch()))
                 .or((Specification<Doctor>) searchLikeString("lastName", doctorFilter.getSearch()));

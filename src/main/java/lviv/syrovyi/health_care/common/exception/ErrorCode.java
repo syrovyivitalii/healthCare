@@ -28,6 +28,11 @@ public enum ErrorCode {
             "Patient not found",
             404
     ),
+    OVERLAPPING_VISIT(
+            "404-003",
+            "The visit cannot be scheduled as it overlaps with an existing appointment",
+            404
+    ),
     //500
     UNKNOWN_SERVER_ERROR("500",
             "Unknown server error",
