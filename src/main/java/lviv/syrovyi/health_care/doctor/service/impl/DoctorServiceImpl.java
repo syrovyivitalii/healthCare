@@ -20,6 +20,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.Random;
 import java.util.UUID;
 
 import static lviv.syrovyi.health_care.common.specification.SpecificationCustom.searchLikeString;
@@ -68,6 +70,26 @@ public class DoctorServiceImpl implements DoctorService {
         doctorMapper.patchMerge(doctorPatchRequestDTO, doctor);
 
         return doctorMapper.mapToDTO(doctor);
+    }
+
+    @Override
+    public boolean existsByFirstNameAndLastName(String firstName, String lastName){
+        return doctorRepository.existsByFirstNameAndLastName(firstName, lastName);
+    }
+
+    @Override
+    public Optional<UUID> getRandomDoctorId() {
+        List<Doctor> allDoctors = doctorRepository.findAll();
+
+        if (allDoctors.isEmpty()) {
+            return Optional.empty();
+        }
+
+        Random random = new Random();
+
+        Doctor doctor = allDoctors.get(random.nextInt(allDoctors.size()));
+
+        return Optional.of(doctor.getId());
     }
 
     private Specification<Doctor> getSearchSpecification(DoctorFilter doctorFilter) {
