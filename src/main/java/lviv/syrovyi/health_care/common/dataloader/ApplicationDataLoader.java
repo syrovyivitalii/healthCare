@@ -29,6 +29,7 @@ public class ApplicationDataLoader {
 
     PatientLoader patientLoader;
     DoctorLoader doctorLoader;
+    VisitLoader visitLoader;
 
     static final String DATA_LOADER_CLASSPATH_LOCATION = "classpath:dataloader";
 
@@ -38,6 +39,9 @@ public class ApplicationDataLoader {
 
         String doctors = getDataLoaderJsonFullPath("doctors");
         loadData(doctors, doctorLoader);
+
+        String visits = getDataLoaderJsonFullPath("visits");
+        loadData(visits, visitLoader);
     }
 
     private String getDataLoaderJsonFullPath(String folders) {

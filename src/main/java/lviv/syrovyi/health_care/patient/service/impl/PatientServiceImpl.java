@@ -21,10 +21,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static lviv.syrovyi.health_care.common.specification.SpecificationCustom.*;
@@ -104,6 +101,21 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public boolean existsByFirstNameAndLastName(String firstName, String lastName){
         return patientRepository.existsByFirstNameAndLastName(firstName, lastName);
+    }
+
+    @Override
+    public Optional<UUID> getRandomPatientId() {
+        List<Patient> allPatients = patientRepository.findAll();
+
+        if (allPatients.isEmpty()) {
+            return Optional.empty();
+        }
+
+        Random random = new Random();
+
+        Patient patient = allPatients.get(random.nextInt(allPatients.size()));
+
+        return Optional.of(patient.getId());
     }
 
     private Specification<Patient> getSearchSpecification(PatientFilter patientFilter) {

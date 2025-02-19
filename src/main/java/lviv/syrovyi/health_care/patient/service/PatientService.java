@@ -7,6 +7,7 @@ import lviv.syrovyi.health_care.patient.controller.dto.response.PatientResponseD
 import lviv.syrovyi.health_care.patient.service.filter.PatientFilter;
 import org.springframework.data.domain.Pageable;
 
+import java.util.Optional;
 import java.util.UUID;
 
 public interface PatientService {
@@ -18,4 +19,6 @@ public interface PatientService {
     boolean existsById(UUID id);
 
     boolean existsByFirstNameAndLastName(String firstName, String lastName);
+
+    Optional<UUID> getRandomPatientId();
 }
