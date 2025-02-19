@@ -16,4 +16,5 @@ public interface DoctorService {
 
     DoctorResponseDTO patch (UUID doctorId, DoctorPatchRequestDTO doctorPatchRequestDTO);
 
+    boolean existsByFirstNameAndLastName(String firstName, String lastName);
 }

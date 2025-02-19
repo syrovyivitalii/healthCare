@@ -70,6 +70,11 @@ public class DoctorServiceImpl implements DoctorService {
         return doctorMapper.mapToDTO(doctor);
     }
 
+    @Override
+    public boolean existsByFirstNameAndLastName(String firstName, String lastName){
+        return doctorRepository.existsByFirstNameAndLastName(firstName, lastName);
+    }
+
     private Specification<Doctor> getSearchSpecification(DoctorFilter doctorFilter) {
         return Specification.where((Specification<Doctor>) searchLikeString("firstName", doctorFilter.getSearch()))
                 .or((Specification<Doctor>) searchLikeString("lastName", doctorFilter.getSearch()));

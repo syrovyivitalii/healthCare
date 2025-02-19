@@ -28,12 +28,16 @@ import static lombok.AccessLevel.PRIVATE;
 public class ApplicationDataLoader {
 
     PatientLoader patientLoader;
+    DoctorLoader doctorLoader;
 
     static final String DATA_LOADER_CLASSPATH_LOCATION = "classpath:dataloader";
 
     public void load() {
         String patients = getDataLoaderJsonFullPath("patients");
         loadData(patients, patientLoader);
+
+        String doctors = getDataLoaderJsonFullPath("doctors");
+        loadData(doctors, doctorLoader);
     }
 
     private String getDataLoaderJsonFullPath(String folders) {
