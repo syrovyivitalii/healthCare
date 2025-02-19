@@ -7,6 +7,7 @@ import lviv.syrovyi.health_care.doctor.controller.dto.response.DoctorResponseDTO
 import lviv.syrovyi.health_care.doctor.service.filter.DoctorFilter;
 import org.springframework.data.domain.Pageable;
 
+import java.util.Optional;
 import java.util.UUID;
 
 public interface DoctorService {
@@ -16,4 +17,7 @@ public interface DoctorService {
 
     DoctorResponseDTO patch (UUID doctorId, DoctorPatchRequestDTO doctorPatchRequestDTO);
 
+    boolean existsByFirstNameAndLastName(String firstName, String lastName);
+
+    Optional<UUID> getRandomDoctorId();
 }

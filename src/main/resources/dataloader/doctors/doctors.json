@@ -1,0 +1,11 @@
+{
+  "doctors": [
+    { "firstName": "Lee", "lastName": "Si", "timezone": "America/New_York" },
+    { "firstName": "John", "lastName": "Doe", "timezone": "America/Los_Angeles" },
+    { "firstName": "Sophia", "lastName": "Jones", "timezone": "Europe/London" },
+    { "firstName": "Oliver", "lastName": "Garcia", "timezone": "Europe/Berlin" },
+    { "firstName": "Mia", "lastName": "Rodriguez", "timezone": "Asia/Tokyo" },
+    { "firstName": "Charlotte", "lastName": "Hernandez", "timezone": "Asia/Dubai" },
+    { "firstName": "Lucas", "lastName": "Wilson", "timezone": "Australia/Sydney" }
+  ]
+}
