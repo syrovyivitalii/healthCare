@@ -4,9 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lviv.syrovyi.health_care.doctor.controller.dto.response.DoctorResponseDTO;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Data
 @Builder
@@ -14,10 +14,8 @@ import java.util.UUID;
 @AllArgsConstructor
 public class VisitResponseDTO {
 
-    private UUID id;
     private LocalDateTime start;
     private LocalDateTime end;
-    private UUID patientId;
-    private UUID doctorId;
+    private DoctorResponseDTO doctor;
 
 }

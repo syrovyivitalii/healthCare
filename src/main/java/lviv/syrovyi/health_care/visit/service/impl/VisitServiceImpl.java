@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lviv.syrovyi.health_care.common.exception.ClientBackendException;
 import lviv.syrovyi.health_care.common.exception.ErrorCode;
-import lviv.syrovyi.health_care.common.util.timezone.TimezoneService;
+import lviv.syrovyi.health_care.common.service.timezone.TimezoneService;
 import lviv.syrovyi.health_care.doctor.repository.DoctorRepository;
 import lviv.syrovyi.health_care.doctor.repository.entity.Doctor;
 import lviv.syrovyi.health_care.patient.service.PatientService;
@@ -15,7 +15,8 @@ import lviv.syrovyi.health_care.visit.repository.VisitRepository;
 import lviv.syrovyi.health_care.visit.repository.impl.Visit;
 import lviv.syrovyi.health_care.visit.service.VisitService;
 import org.springframework.stereotype.Service;
-import java.time.LocalDateTime;
+
+import java.time.ZoneId;
 
 
 @Slf4j
@@ -27,7 +28,6 @@ public class VisitServiceImpl implements VisitService {
     private final VisitMapper visitMapper;
     private final PatientService patientService;
     private final DoctorRepository doctorRepository;
-    private final TimezoneService timezoneService;
 
     @Override
     public VisitResponseDTO save(VisitRequestDTO visitRequestDTO){
@@ -43,24 +43,21 @@ public class VisitServiceImpl implements VisitService {
         Doctor doctor = doctorRepository.findById(visitRequestDTO.getDoctorId())
                 .orElseThrow(() -> new ClientBackendException(ErrorCode.DOCTOR_NOT_FOUND));
 
-        Visit visit = visitMapper.mapToEntity(visitRequestDTO);
+        Visit visit = visitMapper.mapToEntity(visitRequestDTO, doctor);
 
-        LocalDateTime startVisitUTC = timezoneService.convertToDoctorTimezone(visit.getStart(), doctor.getTimezone());
-
-        LocalDateTime endVisitUTC = timezoneService.convertToDoctorTimezone(visit.getEnd(), doctor.getTimezone());
-
-        boolean existsOverlappingVisit = visitRepository.existsOverlappingVisit(visit.getDoctorId(), startVisitUTC, endVisitUTC);
+        boolean existsOverlappingVisit = visitRepository.existsOverlappingVisit(visit.getDoctorId(), visit.getStart(), visit.getEnd());
 
         if (existsOverlappingVisit){
             throw new ClientBackendException(ErrorCode.OVERLAPPING_VISIT);
         }
 
-        visit.setStart(startVisitUTC);
-        visit.setEnd(endVisitUTC);
         visitRepository.save(visit);
 
-        log.info("Visit created successfully for patient {} with doctor {}",
-                visitRequestDTO.getPatientId(), visitRequestDTO.getDoctorId());
+        log.info("Visit created successfully for patient {} with doctor {}, starts at {}, ends at {}",
+                visitRequestDTO.getPatientId(),
+                visitRequestDTO.getDoctorId(),
+                visit.getStart(),
+                visit.getEnd());
 
         return visitMapper.mapToDTO(visit);
     }

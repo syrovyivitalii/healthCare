@@ -61,7 +61,7 @@ public class PatientServiceImpl implements PatientService {
     }
 
     private Specification<Patient> getSearchSpecification(PatientFilter patientFilter) {
-        return Specification.where((Specification<Patient>) searchLikeString("firstName", patientFilter.getSearch()))
-                .or((Specification<Patient>) searchLikeString("lastName", patientFilter.getSearch()));
+        return Specification.where((Specification<Patient>) searchLikeString("lastName", patientFilter.getSearch()))
+                .and((Specification<Patient>) searchFieldInCollectionOfJoinedIds("visits", "doctorId", patientFilter.getDoctorIds()));
     }
 }

@@ -4,7 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lviv.syrovyi.health_care.visit.controller.dto.response.VisitResponseDTO;
+import lviv.syrovyi.health_care.visit.repository.impl.Visit;
 
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -16,5 +19,5 @@ public class PatientResponseDTO {
     private UUID id;
     private String firstName;
     private String lastName;
-
+    private List<VisitResponseDTO> lastVisits;
 }

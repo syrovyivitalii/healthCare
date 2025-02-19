@@ -25,6 +25,6 @@ public class Patient extends BaseEntity {
     private String lastName;
 
     @OneToMany(mappedBy = "patient", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-    private List<Visit> visits;
+    private List<Visit> lastVisits;
 
 }

@@ -17,10 +17,10 @@ import java.util.UUID;
 public class VisitRequestDTO {
 
     @NotNull(message = "Start time of visit is mandatory")
-    private LocalDateTime start;
+    private String start;
 
     @NotNull(message = "End time of visit is mandatory")
-    private LocalDateTime end;
+    private String end;
 
     @NotNull(message = "Patient id is mandatory")
     private UUID patientId;
