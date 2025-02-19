@@ -32,6 +32,7 @@ import static lviv.syrovyi.health_care.common.specification.SpecificationCustom.
 public class DoctorServiceImpl implements DoctorService {
 
     private final DoctorRepository doctorRepository;
+
     private final DoctorMapper doctorMapper;
 
     @Override
@@ -79,17 +80,14 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public Optional<UUID> getRandomDoctorId() {
-        List<Doctor> allDoctors = doctorRepository.findAll();
+        List<UUID> doctorIds = doctorRepository.findAllDoctorIds();
 
-        if (allDoctors.isEmpty()) {
+        if (doctorIds.isEmpty()) {
             return Optional.empty();
         }
 
         Random random = new Random();
-
-        Doctor doctor = allDoctors.get(random.nextInt(allDoctors.size()));
-
-        return Optional.of(doctor.getId());
+        return Optional.of(doctorIds.get(random.nextInt(doctorIds.size())));
     }
 
     private Specification<Doctor> getSearchSpecification(DoctorFilter doctorFilter) {

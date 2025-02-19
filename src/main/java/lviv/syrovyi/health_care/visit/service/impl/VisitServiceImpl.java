@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lviv.syrovyi.health_care.common.exception.ClientBackendException;
 import lviv.syrovyi.health_care.common.exception.ErrorCode;
-import lviv.syrovyi.health_care.common.service.timezone.TimezoneService;
 import lviv.syrovyi.health_care.doctor.repository.DoctorRepository;
 import lviv.syrovyi.health_care.doctor.repository.entity.Doctor;
 import lviv.syrovyi.health_care.patient.service.PatientService;
@@ -16,8 +15,6 @@ import lviv.syrovyi.health_care.visit.repository.impl.Visit;
 import lviv.syrovyi.health_care.visit.service.VisitService;
 import org.springframework.stereotype.Service;
 
-import java.time.ZoneId;
-
 
 @Slf4j
 @Service
@@ -25,15 +22,15 @@ import java.time.ZoneId;
 public class VisitServiceImpl implements VisitService {
 
     private final VisitRepository visitRepository;
-    private final VisitMapper visitMapper;
-    private final PatientService patientService;
     private final DoctorRepository doctorRepository;
+
+    private final VisitMapper visitMapper;
+
+    private final PatientService patientService;
 
     @Override
     public VisitResponseDTO save(VisitRequestDTO visitRequestDTO){
 
-        log.info("Creating visit: {}", visitRequestDTO);
-        
         boolean patientExistence = patientService.existsById(visitRequestDTO.getPatientId());
 
         if (!patientExistence){
