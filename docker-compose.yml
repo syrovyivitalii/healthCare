@@ -1,0 +1,33 @@
+networks:
+  app_network:
+    driver: bridge
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: healthCare_db
+    ports:
+      - "33306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: health_care
+    restart: unless-stopped
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - app_network
+
+  app:
+    container_name: healthCare_app
+    ports:
+      - "8080:8080"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    networks:
+      - app_network
+
+volumes:
+  db_data:
