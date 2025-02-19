@@ -15,9 +15,7 @@ import lviv.syrovyi.health_care.patient.repository.entity.Patient;
 import lviv.syrovyi.health_care.patient.service.PatientService;
 import lviv.syrovyi.health_care.patient.service.filter.PatientFilter;
 import lviv.syrovyi.health_care.visit.controller.dto.response.VisitResponseDTO;
-import lviv.syrovyi.health_care.visit.mapper.VisitMapper;
 import lviv.syrovyi.health_care.visit.repository.VisitRepository;
-import lviv.syrovyi.health_care.visit.repository.impl.Visit;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -41,7 +39,6 @@ public class PatientServiceImpl implements PatientService {
     private final VisitRepository visitRepository;
     private final TimezoneService timezoneService;
     private final DoctorRepository doctorRepository;
-    private final VisitMapper visitMapper;
 
     @Override
     public PatientResponse<PatientResponseDTO> findAllPatients(PatientFilter patientFilter, Pageable pageable) {
@@ -52,16 +49,14 @@ public class PatientServiceImpl implements PatientService {
                 .map(patient -> {
                     PatientResponseDTO patientResponseDTO = patientMapper.mapToDTO(patient);
 
-                    // Get only the last visit per doctor
                     Map<String, VisitResponseDTO> lastVisitPerDoctor = patientResponseDTO.getLastVisits()
                             .stream()
                             .collect(Collectors.toMap(
-                                    visit -> visit.getDoctor().getFirstName() + " " + visit.getDoctor().getLastName(), // Group by doctor's full name
-                                    visit -> visit, // Store the visit
-                                    (existing, replacement) -> existing.getStart().isAfter(replacement.getStart()) ? existing : replacement // Keep the latest visit
+                                    visit -> visit.getDoctor().getFirstName() + " " + visit.getDoctor().getLastName(),
+                                    visit -> visit,
+                                    (existing, replacement) -> existing.getStart().isAfter(replacement.getStart()) ? existing : replacement
                             ));
 
-                    // Convert last visits to list
                     List<VisitResponseDTO> lastVisits = getVisits(lastVisitPerDoctor);
 
                     patientResponseDTO.setLastVisits(lastVisits);
@@ -83,10 +78,8 @@ public class PatientServiceImpl implements PatientService {
             int totalPatients = visitRepository.countPatientsByDoctorName(doctorDTO.getFirstName(), doctorDTO.getLastName());
             doctorDTO.setTotalPatients(totalPatients);
 
-            // Retrieve full Doctor entity to get timezone
             Doctor doctor = doctorRepository.findByFirstNameAndLastName(doctorDTO.getFirstName(), doctorDTO.getLastName());
 
-            // Convert timestamps to the doctor's timezone
             visit.setStart(timezoneService.convertToTimezone(visit.getStart(), doctor.getTimezone()));
             visit.setEnd(timezoneService.convertToTimezone(visit.getEnd(), doctor.getTimezone()));
         });
@@ -106,6 +99,11 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public boolean existsById(UUID id){
         return patientRepository.existsById(id);
+    }
+
+    @Override
+    public boolean existsByFirstNameAndLastName(String firstName, String lastName){
+        return patientRepository.existsByFirstNameAndLastName(firstName, lastName);
     }
 
     private Specification<Patient> getSearchSpecification(PatientFilter patientFilter) {

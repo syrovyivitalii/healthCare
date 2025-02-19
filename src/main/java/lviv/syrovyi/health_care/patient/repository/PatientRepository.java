@@ -8,4 +8,6 @@ import java.util.UUID;
 
 public interface PatientRepository extends JpaRepository <Patient, UUID>, JpaSpecificationExecutor<Patient> {
     boolean existsById(UUID id);
+
+    boolean existsByFirstNameAndLastName(String firstName, String lastName);
 }

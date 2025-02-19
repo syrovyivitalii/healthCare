@@ -1,0 +1,38 @@
+{
+  "patients": [
+    {
+      "firstName": "Andrii",
+      "lastName": "Yarmolenko"
+    },
+    { "firstName": "Oleksandr",
+      "lastName": "Zinchenko"
+    },
+    { "firstName": "Roman",
+      "lastName": "Yaremchuk"
+    },
+    { "firstName": "Vitalii",
+      "lastName": "Mykolenko"
+    },
+    { "firstName": "Ruslan",
+      "lastName": "Malinovskyi"
+    },
+    { "firstName": "Taras",
+      "lastName": "Stepanenko"
+    },
+    { "firstName": "Serhii",
+      "lastName": "Sydorchuk"
+    },
+    { "firstName": "Yevhen",
+      "lastName": "Konoplyanka"
+    },
+    { "firstName": "Dmytro",
+      "lastName": "Chygrynskiy"
+    },
+    { "firstName": "Artem",
+      "lastName": "Dovbyk"
+    },
+    { "firstName": "Mykhailo",
+      "lastName": "Mudryk"
+    }
+  ]
+}

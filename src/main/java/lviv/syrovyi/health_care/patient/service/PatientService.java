@@ -16,4 +16,6 @@ public interface PatientService {
     PatientResponseDTO save (PatientRequestDTO patientRequestDTO);
 
     boolean existsById(UUID id);
+
+    boolean existsByFirstNameAndLastName(String firstName, String lastName);
 }
