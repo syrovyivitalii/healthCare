@@ -7,6 +7,9 @@ import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 import lviv.syrovyi.health_care.common.util.filter.SearchFilter;
 
+import java.util.Set;
+import java.util.UUID;
+
 import static lombok.AccessLevel.PRIVATE;
 
 @Getter
@@ -16,4 +19,5 @@ import static lombok.AccessLevel.PRIVATE;
 @FieldDefaults(level = PRIVATE)
 public class PatientFilter extends SearchFilter {
 
+    Set<UUID> doctorIds ;
 }

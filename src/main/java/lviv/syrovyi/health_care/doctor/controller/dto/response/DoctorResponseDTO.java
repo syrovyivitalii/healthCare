@@ -13,9 +13,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class DoctorResponseDTO {
 
-    private UUID id;
     private String firstName;
     private String lastName;
-    private String timezone;
-
+    private int totalPatients;
 }

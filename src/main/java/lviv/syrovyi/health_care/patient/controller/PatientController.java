@@ -3,6 +3,7 @@ package lviv.syrovyi.health_care.patient.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lviv.syrovyi.health_care.common.dto.response.PageResponse;
+import lviv.syrovyi.health_care.common.dto.response.PatientResponse;
 import lviv.syrovyi.health_care.patient.controller.dto.request.PatientRequestDTO;
 import lviv.syrovyi.health_care.patient.controller.dto.response.PatientResponseDTO;
 import lviv.syrovyi.health_care.patient.service.PatientService;
@@ -21,9 +22,9 @@ public class PatientController {
     private final PatientService patientService;
 
     @GetMapping("/pageable")
-    public ResponseEntity<PageResponse<PatientResponseDTO>> getAllPatients (@ParameterObject PatientFilter playerFilter,
-                                                                           @SortDefault(sort = "lastName", direction = Sort.Direction.ASC) @ParameterObject Pageable pageable){
-        PageResponse<PatientResponseDTO> allPatients = patientService.findAllPatients(playerFilter, pageable);
+    public ResponseEntity<PatientResponse<PatientResponseDTO>> getAllPatients (@ParameterObject PatientFilter playerFilter,
+                                                                               @SortDefault(sort = "lastName", direction = Sort.Direction.ASC) @ParameterObject Pageable pageable){
+        PatientResponse<PatientResponseDTO> allPatients = patientService.findAllPatients(playerFilter, pageable);
 
         return ResponseEntity.ok(allPatients);
     }

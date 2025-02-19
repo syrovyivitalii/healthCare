@@ -16,5 +16,4 @@ public interface DoctorService {
 
     DoctorResponseDTO patch (UUID doctorId, DoctorPatchRequestDTO doctorPatchRequestDTO);
 
-    boolean existsById(UUID id);
 }
