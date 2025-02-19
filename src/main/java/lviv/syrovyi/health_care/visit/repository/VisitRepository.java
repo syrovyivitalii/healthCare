@@ -21,4 +21,7 @@ public interface VisitRepository extends JpaRepository<Visit, UUID> {
     boolean existsOverlappingVisit(@Param("doctorId") UUID doctorId,
                                    @Param("start") LocalDateTime start,
                                    @Param("end") LocalDateTime end);
+
+    @Query("SELECT COUNT(DISTINCT v.patient.id) FROM Visit v WHERE v.doctor.firstName = :firstName AND v.doctor.lastName = :lastName")
+    int countPatientsByDoctorName(String firstName, String lastName);
 }
