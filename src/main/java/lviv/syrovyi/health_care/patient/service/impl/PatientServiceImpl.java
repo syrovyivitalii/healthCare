@@ -2,7 +2,7 @@ package lviv.syrovyi.health_care.patient.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import lviv.syrovyi.health_care.common.dto.response.PatientResponse;
+import lviv.syrovyi.health_care.patient.controller.dto.response.PatientResponse;
 import lviv.syrovyi.health_care.common.service.timezone.TimezoneService;
 import lviv.syrovyi.health_care.doctor.controller.dto.response.DoctorOfPatientResponseDTO;
 import lviv.syrovyi.health_care.doctor.repository.DoctorRepository;
@@ -33,10 +33,12 @@ import static lviv.syrovyi.health_care.common.specification.SpecificationCustom.
 public class PatientServiceImpl implements PatientService {
 
     private final PatientRepository patientRepository;
-    private final PatientMapper patientMapper;
     private final VisitRepository visitRepository;
-    private final TimezoneService timezoneService;
     private final DoctorRepository doctorRepository;
+
+    private final PatientMapper patientMapper;
+
+    private final TimezoneService timezoneService;
 
     @Override
     public PatientResponse<PatientVisitsResponseDTO> findAllPatients(PatientFilter patientFilter, Pageable pageable) {
@@ -106,17 +108,14 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public Optional<UUID> getRandomPatientId() {
-        List<Patient> allPatients = patientRepository.findAll();
+        List<UUID> patientIds = patientRepository.findAllPatientIds();
 
-        if (allPatients.isEmpty()) {
+        if (patientIds.isEmpty()) {
             return Optional.empty();
         }
 
         Random random = new Random();
-
-        Patient patient = allPatients.get(random.nextInt(allPatients.size()));
-
-        return Optional.of(patient.getId());
+        return Optional.of(patientIds.get(random.nextInt(patientIds.size())));
     }
 
     private Specification<Patient> getSearchSpecification(PatientFilter patientFilter) {

@@ -2,8 +2,7 @@ package lviv.syrovyi.health_care.patient.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lviv.syrovyi.health_care.common.dto.response.PageResponse;
-import lviv.syrovyi.health_care.common.dto.response.PatientResponse;
+import lviv.syrovyi.health_care.patient.controller.dto.response.PatientResponse;
 import lviv.syrovyi.health_care.patient.controller.dto.request.PatientRequestDTO;
 import lviv.syrovyi.health_care.patient.controller.dto.response.PatientResponseDTO;
 import lviv.syrovyi.health_care.patient.controller.dto.response.PatientVisitsResponseDTO;

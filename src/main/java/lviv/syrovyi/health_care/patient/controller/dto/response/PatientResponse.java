@@ -1,4 +1,4 @@
-package lviv.syrovyi.health_care.common.dto.response;
+package lviv.syrovyi.health_care.patient.controller.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
