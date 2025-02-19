@@ -2,7 +2,7 @@ package lviv.syrovyi.health_care.patient.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import lviv.syrovyi.health_care.common.dto.response.PageResponse;
+import lviv.syrovyi.health_care.common.dto.response.PatientResponse;
 import lviv.syrovyi.health_care.patient.controller.dto.request.PatientRequestDTO;
 import lviv.syrovyi.health_care.patient.controller.dto.response.PatientResponseDTO;
 import lviv.syrovyi.health_care.patient.mapper.PatientMapper;
@@ -29,7 +29,7 @@ public class PatientServiceImpl implements PatientService {
     private final PatientMapper patientMapper;
 
     @Override
-    public PageResponse<PatientResponseDTO> findAllPatients(PatientFilter patientFilter, Pageable pageable) {
+    public PatientResponse<PatientResponseDTO> findAllPatients(PatientFilter patientFilter, Pageable pageable) {
         Page <Patient> allPatients = patientRepository.findAll(getSearchSpecification(patientFilter), pageable);
 
         List<PatientResponseDTO> collectedDTOs = allPatients
@@ -37,11 +37,9 @@ public class PatientServiceImpl implements PatientService {
                 .map(patientMapper::mapToDTO)
                 .toList();
 
-        return PageResponse.<PatientResponseDTO>builder()
-                .totalPages((long) allPatients.getTotalPages())
-                .pageSize((long) pageable.getPageSize())
-                .totalElements(allPatients.getTotalElements())
-                .content(collectedDTOs)
+        return PatientResponse.<PatientResponseDTO>builder()
+                .data(collectedDTOs)
+                .count(allPatients.getTotalElements())
                 .build();
 
     }
