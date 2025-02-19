@@ -4,11 +4,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lviv.syrovyi.health_care.common.dto.response.PatientResponse;
 import lviv.syrovyi.health_care.common.service.timezone.TimezoneService;
-import lviv.syrovyi.health_care.doctor.controller.dto.response.DoctorResponseDTO;
+import lviv.syrovyi.health_care.doctor.controller.dto.response.DoctorOfPatientResponseDTO;
 import lviv.syrovyi.health_care.doctor.repository.DoctorRepository;
 import lviv.syrovyi.health_care.doctor.repository.entity.Doctor;
 import lviv.syrovyi.health_care.patient.controller.dto.request.PatientRequestDTO;
 import lviv.syrovyi.health_care.patient.controller.dto.response.PatientResponseDTO;
+import lviv.syrovyi.health_care.patient.controller.dto.response.PatientVisitsResponseDTO;
 import lviv.syrovyi.health_care.patient.mapper.PatientMapper;
 import lviv.syrovyi.health_care.patient.repository.PatientRepository;
 import lviv.syrovyi.health_care.patient.repository.entity.Patient;
@@ -38,13 +39,13 @@ public class PatientServiceImpl implements PatientService {
     private final DoctorRepository doctorRepository;
 
     @Override
-    public PatientResponse<PatientResponseDTO> findAllPatients(PatientFilter patientFilter, Pageable pageable) {
+    public PatientResponse<PatientVisitsResponseDTO> findAllPatients(PatientFilter patientFilter, Pageable pageable) {
         Page<Patient> allPatients = patientRepository.findAll(getSearchSpecification(patientFilter), pageable);
 
-        List<PatientResponseDTO> collectedDTOs = allPatients
+        List<PatientVisitsResponseDTO> collectedDTOs = allPatients
                 .stream()
                 .map(patient -> {
-                    PatientResponseDTO patientResponseDTO = patientMapper.mapToDTO(patient);
+                    PatientVisitsResponseDTO patientResponseDTO = patientMapper.mapToVisitsDTO(patient);
 
                     Map<String, VisitResponseDTO> lastVisitPerDoctor = patientResponseDTO.getLastVisits()
                             .stream()
@@ -61,7 +62,7 @@ public class PatientServiceImpl implements PatientService {
                 })
                 .collect(Collectors.toList());
 
-        return PatientResponse.<PatientResponseDTO>builder()
+        return PatientResponse.<PatientVisitsResponseDTO>builder()
                 .data(collectedDTOs)
                 .count(allPatients.getTotalElements())
                 .build();
@@ -71,7 +72,7 @@ public class PatientServiceImpl implements PatientService {
         List<VisitResponseDTO> lastVisits = new ArrayList<>(lastVisitPerDoctor.values());
 
         lastVisits.forEach(visit -> {
-            DoctorResponseDTO doctorDTO = visit.getDoctor();
+            DoctorOfPatientResponseDTO doctorDTO = visit.getDoctor();
             int totalPatients = visitRepository.countPatientsByDoctorName(doctorDTO.getFirstName(), doctorDTO.getLastName());
             doctorDTO.setTotalPatients(totalPatients);
 

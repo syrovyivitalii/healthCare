@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lviv.syrovyi.health_care.doctor.controller.dto.response.DoctorResponseDTO;
+import lviv.syrovyi.health_care.doctor.controller.dto.response.DoctorOfPatientResponseDTO;
 
 import java.time.LocalDateTime;
 
@@ -16,6 +16,5 @@ public class VisitResponseDTO {
 
     private LocalDateTime start;
     private LocalDateTime end;
-    private DoctorResponseDTO doctor;
-
+    private DoctorOfPatientResponseDTO doctor;
 }
