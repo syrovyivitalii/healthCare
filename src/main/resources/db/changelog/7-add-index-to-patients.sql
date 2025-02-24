@@ -1,0 +1,1 @@
+CREATE INDEX idx_patients_last_name ON patients (last_name);

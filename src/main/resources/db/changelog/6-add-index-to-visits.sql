@@ -1,0 +1,1 @@
+CREATE INDEX idx_visits_patient_doctor_start ON visits (patient_id, doctor_id, start_date_time);
