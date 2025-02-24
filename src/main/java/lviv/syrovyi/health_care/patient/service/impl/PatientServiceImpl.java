@@ -42,7 +42,7 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public PatientResponse<PatientVisitsResponseDTO> findAllPatients(PatientFilter patientFilter, Pageable pageable) {
-        Page<Patient> allPatients = patientRepository.findAll(getSearchSpecification(patientFilter), pageable);
+        Page<Patient> allPatients = patientRepository.findAllPatientsWithVisits(getSearchSpecification(patientFilter), pageable);
 
         List<PatientVisitsResponseDTO> collectedDTOs = allPatients
                 .stream()
