@@ -9,3 +9,7 @@ databaseChangeLog:
       file: db/changelog/4-add-unique-doctor-name-constraints.sql
   - include:
       file: db/changelog/5-add-unique-patient-name-constraint.sql
+  - include:
+      file: db/changelog/6-add-index-to-visits.sql
+  - include:
+      file: db/changelog/7-add-index-to-patients.sql

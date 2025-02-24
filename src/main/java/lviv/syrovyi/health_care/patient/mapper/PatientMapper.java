@@ -12,6 +12,4 @@ public interface PatientMapper {
     Patient mapToEntity (PatientRequestDTO patientRequestDTO);
 
     PatientResponseDTO mapToDTO (Patient patient);
-
-    PatientVisitsResponseDTO mapToVisitsDTO (Patient patient);
 }
