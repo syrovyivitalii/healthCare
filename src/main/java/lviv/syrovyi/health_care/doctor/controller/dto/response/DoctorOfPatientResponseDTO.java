@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 public class DoctorOfPatientResponseDTO {
     private String firstName;
     private String lastName;
-    private int totalPatients;
+    private Integer totalPatients;
 }

@@ -20,10 +20,4 @@ public class SpecificationCustom {
                         (r, rq, cb) -> cb.like(cb.lower(r.get(propertyName)), "%" + property.toLowerCase().trim() + "%"))
                 .orElse(null);
     }
-
-    public static Specification<? extends BaseEntity> searchFieldInCollectionOfJoinedIds(String joinField, String field, Set<UUID> set) {
-        return CollectionUtils.isNotEmpty(set) ?
-                (r, rq, cb) -> r.join(joinField).get(field).in(set) :
-                null;
-    }
 }
